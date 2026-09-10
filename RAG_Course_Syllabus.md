@@ -1,78 +1,79 @@
-# RAG: Zero to Expert — Full Course Syllabus
+# RAG: Zero to Expert — Course Outline
 
 **Language:** Python 3.12+
-**Format:** One module per session. Every module = concepts → code you type and run → an exercise → a checkpoint.
-**Rule:** You tell me when a module is done, and we move to the next one. If something breaks or doesn't click, we stop and fix it before moving on.
+**Format:** One module per session. Every module follows the same shape: concepts → hands-on code → exercise → checkpoint.
+**Progression:** Modules are completed in order. Any module that breaks or doesn't land gets resolved before moving to the next one.
 
 ---
 
 ## How this course works
 
-**Build-then-abstract.** For every major idea you first implement it yourself in plain Python (numpy, requests, sqlite) so you understand what's actually happening. *Then* we swap in the production library (LangChain / LlamaIndex / Qdrant) and you'll know exactly what it's doing under the hood. This is the difference between someone who "uses RAG" and someone who can debug it at 2am.
+**Build-then-abstract.** Every major idea is first implemented from scratch in plain Python (numpy, requests, sqlite) to establish what is actually happening. The production library (LangChain / LlamaIndex / Qdrant) is then swapped in, with a clear understanding of what it does under the hood. This is the difference between someone who "uses RAG" and someone who can debug it under pressure.
 
-**Every module ships something runnable.** No slideware. By the end you'll have a repo with ~30 working projects.
+**Every module ships something runnable.** No slideware. The end state is a repo containing roughly 30 working projects.
 
 **Where the UI shows up:**
-- Modules 0–15: **console / scripts / Jupyter only.** No UI needed, and I'll say so explicitly.
+- Modules 0–15: **console / scripts / Jupyter only.** No UI required.
 - Module 16: **first real UI** — Streamlit chat app, then a FastAPI backend.
 - Module 26 onward: production API, Docker, deployment.
-I will always tell you at the start of a module whether you need a UI, a console script, or a notebook.
 
-**What you need before Module 0:**
+Each module states up front whether it needs a UI, a console script, or a notebook.
+
+**Prerequisites before Module 0:**
 - A computer (Windows / Mac / Linux — all fine)
-- Basic Python: variables, functions, loops, lists/dicts, importing a library. If you can write a for-loop, you're ready. If not, tell me and I'll insert a Module -1.
+- Basic Python: variables, functions, loops, lists/dicts, importing a library. The bar is roughly "can write a for-loop."
 - **No** machine learning background required. No maths beyond "what is an average."
-- Budget: roughly $10–30 of API credits across the whole course. There's a **fully free local path** (Ollama + open models) for every module — I'll give both.
+- Budget: roughly $10–30 of API credits across the whole course. A **fully free local path** (Ollama + open models) exists for every module.
 
-**Estimated time:** 60–100 hours total, depending on how deep you go on exercises. Roughly 2–4 hours per module.
+**Estimated time:** 60–100 hours total, depending on exercise depth. Roughly 2–4 hours per module.
 
 ---
 
 # PART 0 — FOUNDATIONS
-*You cannot debug RAG if you don't understand what an LLM and an embedding actually are.*
+*RAG cannot be debugged without understanding what an LLM and an embedding actually are.*
 
 ### Module 0 — Environment setup
-Python 3.12, virtual environments (`uv` / `venv`), project layout, `.env` and secret handling, Git basics, Jupyter, VS Code setup. Setting up an LLM provider (OpenAI / Anthropic / Google) **and** a free local option (Ollama). Your first API call, streaming, error handling, cost logging.
+Python 3.12, virtual environments (`uv` / `venv`), project layout, `.env` and secret handling, Git basics, Jupyter, VS Code setup. Setting up an LLM provider (OpenAI / Anthropic / Google) **and** a free local option (Ollama). First API call, streaming, error handling, cost logging.
 **Ship:** `hello_llm.py` that streams a response and prints token cost. **Console only.**
 
 ### Module 1 — LLM fundamentals for RAG
 Tokens and tokenization (hands-on with `tiktoken`), context windows, temperature/top-p, system vs user vs assistant roles, structured output (JSON mode / Pydantic), tool calling, prompt caching. **Why hallucination happens** — mechanically, not hand-wavily. The knowledge-cutoff problem. Cost and latency maths.
 **The big decision tree:** when to use RAG vs fine-tuning vs long-context vs tool-calling vs plain prompting — and when RAG is the *wrong* answer.
-**Ship:** a script that proves the model hallucinates on private data, then proves it answers correctly when you paste the data in. That gap *is* RAG.
+**Ship:** a script that demonstrates the model hallucinating on private data, then answering correctly once the data is pasted in. That gap *is* RAG.
 
 ### Module 2 — Text representation and embeddings, from scratch
-Bag-of-words → TF-IDF → word2vec → transformer embeddings. Vectors, dimensions, cosine similarity vs dot product vs Euclidean, normalization, mean pooling vs CLS pooling. Why "king − man + woman ≈ queen" and why that intuition partly misleads you. Matryoshka embeddings and truncatable dimensions.
-**Ship:** semantic search over 200 sentences in pure numpy, no vector DB, ~60 lines. Then visualise the embedding space in 2D.
+Bag-of-words → TF-IDF → word2vec → transformer embeddings. Vectors, dimensions, cosine similarity vs dot product vs Euclidean, normalization, mean pooling vs CLS pooling. Why "king − man + woman ≈ queen" and why that intuition is partly misleading. Matryoshka embeddings and truncatable dimensions.
+**Ship:** semantic search over 200 sentences in pure numpy, no vector DB, ~60 lines. Then a 2D visualisation of the embedding space.
 
 ---
 
 # PART 1 — CORE RAG
 *A working pipeline, then every component broken open.*
 
-### Module 3 — Your first complete RAG pipeline
-The five stages: **load → chunk → embed → retrieve → generate.** Built end-to-end in one file with no frameworks. Then the same thing in LangChain and in LlamaIndex, side by side, so you can see what the framework hides. Citations, and refusing to answer when nothing relevant is retrieved.
-**Ship:** ask questions about a PDF you supply, from the terminal, with sources.
+### Module 3 — First complete RAG pipeline
+The five stages: **load → chunk → embed → retrieve → generate.** Built end-to-end in one file with no frameworks. Then the same thing in LangChain and in LlamaIndex, side by side, to expose what the framework hides. Citations, and refusing to answer when nothing relevant is retrieved.
+**Ship:** terminal Q&A over a supplied PDF, with sources.
 
 ### Module 4 — Document ingestion and parsing (the unglamorous 60% of the job)
 PDFs (PyMuPDF, pdfplumber, Docling), DOCX, PPTX, HTML, Markdown, CSV/Excel, email, code. Scanned documents and OCR. Table extraction. Multi-column layouts. Headers/footers/boilerplate stripping. Encoding hell. Deduplication. Metadata extraction (title, section, page, author, date). Preserving document hierarchy. Web scraping and sitemap crawling.
 **Ship:** an ingestion module that takes a messy folder of mixed formats and outputs clean, structured, metadata-rich documents.
 
 ### Module 5 — Chunking deep-dive
-Fixed-size, token-based, recursive character, sentence-aware, structural/Markdown-aware, semantic chunking (embedding-similarity breakpoints), parent-child, sentence-window, late chunking, and **Contextual Retrieval** (prepending an LLM-written context blurb to each chunk — a technique that measurably cuts retrieval failures). Overlap strategy. Chunk size vs recall vs precision, measured empirically on your own data rather than guessed.
+Fixed-size, token-based, recursive character, sentence-aware, structural/Markdown-aware, semantic chunking (embedding-similarity breakpoints), parent-child, sentence-window, late chunking, and **Contextual Retrieval** (prepending an LLM-written context blurb to each chunk — a technique that measurably cuts retrieval failures). Overlap strategy. Chunk size vs recall vs precision, measured empirically on the actual corpus rather than guessed.
 **Ship:** a chunking lab that runs 6 strategies over the same corpus and scores them against each other.
 
 ### Module 6 — Embedding models in depth
-Proprietary (OpenAI text-embedding-3, Cohere embed-v4, Voyage, Gemini) vs open weights (Qwen3-Embedding, BGE, E5, Nomic, KaLM, all-MiniLM). How to read MTEB/MMTEB — and why the leaderboard leader is usually *not* your best pick. Task instruction prefixes. Dimension vs quality vs storage cost. Symmetric vs asymmetric search. Running models locally with `sentence-transformers` and Text Embeddings Inference. Batching, rate limits, embedding cost maths. Embedding versioning (and why a model upgrade means a full re-index).
-**Ship:** a bake-off harness that benchmarks 4 embedding models on *your* corpus and picks a winner on evidence.
+Proprietary (OpenAI text-embedding-3, Cohere embed-v4, Voyage, Gemini) vs open weights (Qwen3-Embedding, BGE, E5, Nomic, KaLM, all-MiniLM). How to read MTEB/MMTEB — and why the leaderboard leader is usually *not* the best pick. Task instruction prefixes. Dimension vs quality vs storage cost. Symmetric vs asymmetric search. Running models locally with `sentence-transformers` and Text Embeddings Inference. Batching, rate limits, embedding cost maths. Embedding versioning (and why a model upgrade means a full re-index).
+**Ship:** a bake-off harness that benchmarks 4 embedding models on the target corpus and picks a winner on evidence.
 
 ### Module 7 — Vector databases and ANN search
 **Theory:** exact kNN vs approximate; HNSW (graphs, `M`, `ef_construction`, `ef_search`); IVF; product/scalar/binary quantization; the recall-latency-memory triangle.
-**Practice:** Chroma (prototyping) → Qdrant (production default) → pgvector (when you already run Postgres). Collections, upserts, payload/metadata filtering, snapshots, hybrid-ready schemas, index tuning. Choosing between them honestly, including "you don't need one yet."
+**Practice:** Chroma (prototyping) → Qdrant (production default) → pgvector (when Postgres is already in the stack). Collections, upserts, payload/metadata filtering, snapshots, hybrid-ready schemas, index tuning. Choosing between them honestly, including "one isn't needed yet."
 **Ship:** the same corpus indexed in all three, benchmarked on recall and p95 latency.
 
 ### Module 8 — Retrieval and prompting basics
 top-k selection, similarity thresholds, MMR for diversity, deduplicating near-identical chunks, context assembly and ordering, the "lost in the middle" effect, prompt templates for grounded answering, forcing citations, controlled refusal, streaming the answer.
-**Ship:** a retriever+generator you can configure from a YAML file, so later modules can A/B test it.
+**Ship:** a retriever+generator configurable from a YAML file, so later modules can A/B test it.
 
 ---
 
@@ -112,17 +113,17 @@ Prompt architecture for faithful answers, inline citation with span-level attrib
 **Ship:** a conversational RAG engine with verified citations.
 
 ### Module 16 — Building the interface ⭐ *first UI module*
-**Streamlit** chat app: streaming responses, expandable source panels, thumbs up/down feedback capture, file upload, settings sidebar. Then the same engine behind a **FastAPI** backend with SSE streaming, plus a proper CLI with `typer`. Which one to use when. (Optional: a minimal React front-end if you want it.)
-**Ship:** a shareable app someone non-technical can actually use.
+**Streamlit** chat app: streaming responses, expandable source panels, thumbs up/down feedback capture, file upload, settings sidebar. Then the same engine behind a **FastAPI** backend with SSE streaming, plus a proper CLI with `typer`. Which one to use when. (Optional: a minimal React front-end.)
+**Ship:** a shareable app a non-technical user can actually use.
 
 ---
 
 # PART 4 — EVALUATION
-*If you can't measure it, you're guessing. Systematic eval from day one is now standard practice, not a nice-to-have.*
+*Without measurement, it's guesswork. Systematic eval from day one is standard practice, not a nice-to-have.*
 
 ### Module 17 — Retrieval evaluation
 Building a golden dataset (manual + LLM-synthesized questions with human review), hit rate, recall@k, precision@k, MRR, **NDCG**, and how to interpret each. Hard-negative discovery. Error taxonomy: retrieval miss vs ranking failure vs chunking failure vs generation failure.
-**Ship:** an eval harness + your first honest scorecard. Expect it to be worse than you hoped.
+**Ship:** an eval harness and an honest baseline scorecard.
 
 ### Module 18 — End-to-end evaluation and regression testing
 **RAGAS** (faithfulness, answer relevancy, context precision, context recall), **DeepEval** (pytest-style, CI-ready, custom G-Eval metrics), Phoenix/LangSmith/Langfuse. Designing trustworthy LLM-as-judge prompts, judge bias and how to calibrate against human labels, pairwise A/B evaluation, statistical significance on small eval sets, cost of evaluation, and **eval gates in CI** so a bad change can't ship.
@@ -150,11 +151,11 @@ Three architectures: **caption-and-index**, **unified multimodal embeddings** (C
 
 ### Module 23 — Long context, caching, and memory
 Million-token context windows vs RAG: the real cost, latency, and recall trade-offs (long context degrades on retrieval-in-the-middle, and costs orders of magnitude more at scale). Hybrid "retrieve widely, reason over long context" designs. Prompt caching. Semantic caching of answers. Agent memory systems: episodic, semantic, working memory, and how memory differs from retrieval.
-**Ship:** a semantic cache that cuts your per-query cost substantially.
+**Ship:** a semantic cache that cuts per-query cost substantially.
 
 ### Module 24 — Fine-tuning for RAG
-Fine-tuning embedding models on your domain with hard-negative mining and contrastive loss (Matryoshka + MultipleNegativesRanking), fine-tuning a reranker, **RAFT** (training the generator to ignore distractor chunks), and distilling a big judge into a small cheap one. Crucially: when *not* to do any of this.
-**Ship:** a domain-tuned embedding model that beats the off-the-shelf model on your eval set.
+Fine-tuning embedding models on a specific domain with hard-negative mining and contrastive loss (Matryoshka + MultipleNegativesRanking), fine-tuning a reranker, **RAFT** (training the generator to ignore distractor chunks), and distilling a big judge into a small cheap one. Crucially: when *not* to do any of this.
+**Ship:** a domain-tuned embedding model that beats the off-the-shelf model on the project eval set.
 
 ---
 
@@ -162,30 +163,30 @@ Fine-tuning embedding models on your domain with hard-negative mining and contra
 *Everything above is a prototype until this part.*
 
 ### Module 25 — Production system design
-Offline (ingestion) vs online (query) paths. Ingestion pipelines with queues and workers. Incremental sync and change-data-capture — detecting new/updated/deleted source documents. Idempotent upserts and document versioning. Index versioning and zero-downtime re-indexing (blue/green). Backfills. Schema migration. Handling a 10-million-document corpus. Full reference architecture diagram you'll implement.
+Offline (ingestion) vs online (query) paths. Ingestion pipelines with queues and workers. Incremental sync and change-data-capture — detecting new/updated/deleted source documents. Idempotent upserts and document versioning. Index versioning and zero-downtime re-indexing (blue/green). Backfills. Schema migration. Handling a 10-million-document corpus. Full reference architecture diagram, then implemented.
 
 ### Module 26 — The production service
 FastAPI done properly: async everything, dependency injection, connection pooling, request batching, SSE streaming, timeouts, retries with backoff, circuit breakers, graceful degradation when the vector DB is down, rate limiting, config management, structured logging, health checks. Dockerfile + docker-compose with Qdrant/Postgres/Redis.
-**Ship:** a containerised API you could actually put in front of users.
+**Ship:** a containerised API fit to put in front of users.
 
 ### Module 27 — Latency, throughput, and cost engineering
 Profiling the full latency budget (embed → search → rerank → generate) and attacking each. Caching layers. Quantization and dimension reduction. Async parallel retrieval. Model routing (cheap model for easy queries). Batch vs realtime embedding. GPU vs CPU inference, vLLM and TEI for self-hosting. Building a cost-per-query model and a monthly forecast.
 **Ship:** measured p50/p95/p99 before and after optimisation.
 
 ### Module 28 — Observability
-OpenTelemetry tracing across the whole pipeline. Langfuse / Phoenix / LangSmith. Logging every retrieved chunk and score so failures are reproducible. Capturing user feedback. Online (production) eval sampling. Dashboards for retrieval health, hallucination rate, latency, cost. Drift detection: when your corpus or your users' questions change under you. Alerting.
-**Ship:** a dashboard where you can click any bad answer and see exactly why it happened.
+OpenTelemetry tracing across the whole pipeline. Langfuse / Phoenix / LangSmith. Logging every retrieved chunk and score so failures are reproducible. Capturing user feedback. Online (production) eval sampling. Dashboards for retrieval health, hallucination rate, latency, cost. Drift detection: when the corpus or the users' questions change underneath the system. Alerting.
+**Ship:** a dashboard where any bad answer can be clicked through to the exact cause.
 
 ### Module 29 — Security, privacy, and governance
-**Indirect prompt injection through retrieved documents** — the #1 RAG-specific vulnerability — plus data poisoning of the index. Sanitization and content isolation. PII detection and redaction at ingestion. Tenant isolation testing. Secrets management. Output guardrails. Audit trails and data lineage. Right-to-be-forgotten / deletion propagation. Compliance overview (GDPR, EU AI Act, HIPAA-shaped constraints) and self-hosting for sensitive data. Red-teaming your own system.
-**Ship:** a red-team suite that attacks your RAG app, and the fixes.
+**Indirect prompt injection through retrieved documents** — the #1 RAG-specific vulnerability — plus data poisoning of the index. Sanitization and content isolation. PII detection and redaction at ingestion. Tenant isolation testing. Secrets management. Output guardrails. Audit trails and data lineage. Right-to-be-forgotten / deletion propagation. Compliance overview (GDPR, EU AI Act, HIPAA-shaped constraints) and self-hosting for sensitive data. Red-teaming the system.
+**Ship:** a red-team suite that attacks the RAG app, and the fixes.
 
 ### Module 30 — MLOps, CI/CD, and operating the system
 Repo structure and testing strategy for LLM apps (unit, integration, eval, smoke). CI with eval gates. Canary and shadow deployments. A/B testing retrieval configurations against real users. Feature flags for retrieval strategies. Runbooks and incident response for "the bot is confidently wrong." Data freshness SLOs. On-call reality.
 
 ### Module 31 — Deployment
 Deploying to a VPS, to AWS/GCP/Azure, serverless vs always-on, Kubernetes essentials, managed vector DB vs self-hosted, self-hosting open models with vLLM/Ollama, air-gapped/on-prem deployments, scaling and autoscaling, backup and disaster recovery, and total cost of ownership at 10 / 1k / 100k queries per day.
-**Ship:** your app live on the internet with a URL.
+**Ship:** the app live on the internet with a URL.
 
 ---
 
@@ -194,9 +195,10 @@ Deploying to a VPS, to AWS/GCP/Azure, serverless vs always-on, Kubernetes essent
 ### Module 32 — Capstone I: Enterprise knowledge assistant
 Multi-format ingestion, hybrid retrieval + reranking, permission-aware multi-tenancy, conversational memory, citations, full eval suite, observability, Docker, deployed, with a written architecture doc and cost model. This is the portfolio piece.
 
-### Module 33 — Capstone II: your choice
-Pick one: (a) multimodal financial-report analyst using ColPali, (b) GraphRAG research assistant over a paper corpus, (c) agentic customer-support bot with tool use and escalation, (d) a domain system for your own job/business.
+### Module 33 — Capstone II: elective
+One of: (a) multimodal financial-report analyst using ColPali, (b) GraphRAG research assistant over a paper corpus, (c) agentic customer-support bot with tool use and escalation, (d) a domain system targeting a real internal use case.
 
 ### Module 34 — Staying expert
-How to read a RAG paper in 15 minutes. Key benchmarks (BEIR, MTEB, ViDoRe, CRAG, RAGBench) and how to not be fooled by them. Evaluating a new technique against your own baseline before adopting it. Where the field is heading: agentic retrieval, memory-centric architectures, retrieval as reasoning, context governance. Reading list, communities, and RAG system-design interview prep.
-· incremental re-indexing · embedding model migration · permission filtering · prompt injection via documents · eval before optimisation · cost modelling · when RAG is the wrong tool · graceful degradation · the fact that most "advanced RAG" techniques don't help your specific corpus and you need evidence to know which do.
+How to read a RAG paper in 15 minutes. Key benchmarks (BEIR, MTEB, ViDoRe, CRAG, RAGBench) and how to not be fooled by them. Evaluating a new technique against an existing baseline before adopting it. Where the field is heading: agentic retrieval, memory-centric architectures, retrieval as reasoning, context governance. Reading list, communities, and RAG system-design interview prep.
+
+**Themes recurring throughout the course:** incremental re-indexing · embedding model migration · permission filtering · prompt injection via documents · eval before optimisation · cost modelling · when RAG is the wrong tool · graceful degradation · the fact that most "advanced RAG" techniques don't help a specific corpus, and evidence is required to know which do.
