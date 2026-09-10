@@ -1,9 +1,9 @@
-# AI Agents, Automation & MCP — Full Course Outline
+# AI Agents, Automation & MCP — Course Outline
 
 **Language:** Python 3.12+
 **Target:** Absolute beginner → able to design, build, secure, deploy and evaluate production agent systems
-**Format:** Every module = concepts + working code you type and run + exercises + a checkpoint project
-**Pace:** One module at a time. Tell me when you've finished one and we move to the next.
+**Format:** Every module = concepts + hands-on code + exercises + a checkpoint project
+**Pace:** One module at a time, completed in order.
 
 ---
 
@@ -11,40 +11,40 @@
 
 Seven parts, 35 modules. Each builds on the last. Nothing is skipped — including the boring, unglamorous parts (async Python, error handling, auth, evals) that are exactly what separates a demo from something that works.
 
-| Part | Modules | What you'll be able to do at the end |
+| Part | Modules | Capability at the end of the part |
 |---|---|---|
-| 0. Foundations | 0–2 | Have a working dev environment and understand what an LLM actually is as a *component* |
-| 1. Talking to models | 3–5 | Drive the Claude API confidently; get reliable structured data out of a model |
-| 2. Tools & the agent loop | 6–9 | Build a real agent from scratch, with no framework, and understand every line |
-| 3. MCP deep dive | 10–19 | Build, secure, deploy and publish MCP servers and clients — this is the biggest part |
-| 4. Agent frameworks | 20–24 | Use PydanticAI, LangGraph and the Claude Agent SDK; know which to pick and why |
-| 5. Knowledge & RAG | 25–27 | Give agents access to your own documents and data |
-| 6. Automation & UI | 28–29 | Connect agents to real systems; build console and web interfaces |
-| 7. Production | 30–34 | Evaluate, observe, secure, deploy, and ship a capstone |
+| 0. Foundations | 0–2 | A working dev environment, and an understanding of what an LLM actually is as a *component* |
+| 1. Talking to models | 3–5 | Driving the Claude API confidently; getting reliable structured data out of a model |
+| 2. Tools & the agent loop | 6–9 | Building a real agent from scratch, with no framework, understanding every line |
+| 3. MCP deep dive | 10–19 | Building, securing, deploying and publishing MCP servers and clients — this is the biggest part |
+| 4. Agent frameworks | 20–24 | Using PydanticAI, LangGraph and the Claude Agent SDK; knowing which to pick and why |
+| 5. Knowledge & RAG | 25–27 | Giving agents access to internal documents and data |
+| 6. Automation & UI | 28–29 | Connecting agents to real systems; building console and web interfaces |
+| 7. Production | 30–34 | Evaluating, observing, securing, deploying, and shipping a capstone |
 
 ---
 
 ## PART 0 — FOUNDATIONS
 
-### Module 0 — Environment setup ← *you are here*
-Python install and version check. `uv` as your package manager. Virtual environments (what they are and why every tutorial that skips them is setting you up for pain). Project structure. VS Code setup. Git basics. Getting an API key. `.env` files and why secrets never go in code. Your first Claude API call. Your first MCP smoke test. Troubleshooting table for the errors you *will* hit.
+### Module 0 — Environment setup
+Python install and version check. `uv` as the package manager. Virtual environments (what they are, and why tutorials that skip them cause pain later). Project structure. VS Code setup. Git basics. Getting an API key. `.env` files and why secrets never go in code. First Claude API call. First MCP smoke test. Troubleshooting table for the errors that will inevitably come up.
 **Deliverable:** a working project folder that talks to Claude and runs an MCP server.
 
-### Module 1 — Python you actually need for agents
-Not a general Python course — the specific subset agent code depends on. Type hints and why they matter more here than in normal Python (the MCP SDK generates tool schemas from them). `async`/`await`, event loops, `asyncio.run`, `async with`, async iterators — the MCP SDK is async-first and you cannot avoid this. Decorators (how `@mcp.tool()` works under the hood). Pydantic v2: models, validation, `Field`, JSON schema generation. Context managers. Generators. Exceptions and custom exception classes. Environment variables. Logging (not `print`).
+### Module 1 — The Python actually needed for agents
+Not a general Python course — the specific subset agent code depends on. Type hints and why they matter more here than in normal Python (the MCP SDK generates tool schemas from them). `async`/`await`, event loops, `asyncio.run`, `async with`, async iterators — the MCP SDK is async-first, so this is unavoidable. Decorators (how `@mcp.tool()` works under the hood). Pydantic v2: models, validation, `Field`, JSON schema generation. Context managers. Generators. Exceptions and custom exception classes. Environment variables. Logging (not `print`).
 **Deliverable:** small async CLI tool that fetches and validates data concurrently.
 
 ### Module 2 — How LLMs work, for builders
-Tokens and tokenization (and why your bill and your bugs both live here). Context windows and what "1M context" really means in practice. The completion loop. Temperature, top-p, and when to change them. System vs user vs assistant roles. Stop sequences. Streaming. Determinism and why you can't have it. Extended thinking / effort levels. Prompt caching. What a model fundamentally *cannot* do — and therefore what tools are for. Cost math: how to estimate what a feature costs before building it.
-**Deliverable:** a token counter and cost estimator you'll reuse all course.
+Tokens and tokenization (and why both the bill and the bugs live here). Context windows and what "1M context" really means in practice. The completion loop. Temperature, top-p, and when to change them. System vs user vs assistant roles. Stop sequences. Streaming. Determinism and why it isn't available. Extended thinking / effort levels. Prompt caching. What a model fundamentally *cannot* do — and therefore what tools are for. Cost math: how to estimate what a feature costs before building it.
+**Deliverable:** a token counter and cost estimator, reused throughout the course.
 
 ---
 
 ## PART 1 — TALKING TO MODELS
 
 ### Module 3 — The Claude API, properly
-The `anthropic` Python SDK. `messages.create` in depth: every parameter. Multi-turn conversations and managing history yourself. Streaming responses. Handling `stop_reason`. System prompts. Images and PDFs as input. Error handling: rate limits, overloads, retries with exponential backoff. The Models API. Batch API for bulk jobs. Async client. Tracking token usage and cost per call.
-**Also covered:** how to swap providers later (OpenAI, Gemini, local models via Ollama) so you're never locked in.
+The `anthropic` Python SDK. `messages.create` in depth: every parameter. Multi-turn conversations and managing history manually. Streaming responses. Handling `stop_reason`. System prompts. Images and PDFs as input. Error handling: rate limits, overloads, retries with exponential backoff. The Models API. Batch API for bulk jobs. Async client. Tracking token usage and cost per call.
+**Also covered:** how to swap providers later (OpenAI, Gemini, local models via Ollama) to avoid lock-in.
 **Deliverable:** a robust, retrying, cost-tracked API wrapper module.
 
 ### Module 4 — Prompt engineering for agents
@@ -60,20 +60,20 @@ Why free text breaks pipelines. JSON mode vs structured outputs vs tool-use-as-e
 ## PART 2 — TOOLS & THE AGENT LOOP
 
 ### Module 6 — Tool use from first principles
-What "function calling" actually is (spoiler: the model never runs anything). Defining tools by hand. The `tool_use` / `tool_result` message cycle. Writing the loop yourself, step by step. Parallel tool calls. Tool errors and how to report them back to the model. Forcing/disabling tool choice. Anthropic's server-side tools: web search, code execution, computer use.
+What "function calling" actually is (spoiler: the model never runs anything). Defining tools by hand. The `tool_use` / `tool_result` message cycle. The loop written out by hand, step by step. Parallel tool calls. Tool errors and how to report them back to the model. Forcing/disabling tool choice. Anthropic's server-side tools: web search, code execution, computer use.
 **Deliverable:** a calculator + weather agent, loop written by hand, no framework.
 
-### Module 7 — Your first real agent
+### Module 7 — First real agent
 Agent vs workflow vs chain — the distinction that matters. The ReAct pattern. Planning and decomposition. Multi-step tool use. Loop termination and max-iteration guards. Handling model mistakes. Self-correction. Cost and latency control. When an agent is the wrong answer and a plain script is better.
 **Deliverable:** a research agent that plans, searches, reads, and writes a report.
 
 ### Module 8 — Console interfaces
 When console is the right choice (most of the time, early). `rich` for formatted output, tables, live displays, spinners. `typer` for CLI arguments. Streaming output to a terminal. Interactive REPL loops. Human-in-the-loop approval prompts. Slash commands. Config files.
-**Deliverable:** a polished terminal chat client for your agent.
+**Deliverable:** a polished terminal chat client for the agent.
 
 ### Module 9 — Memory and state
 Short-term: conversation history management. Context window overflow strategies — truncation, summarization, compaction. Long-term: persisting sessions to disk/SQLite. Semantic memory with embeddings. Scratchpads and working memory. Per-user state. What to remember and what to forget.
-**Deliverable:** an agent that remembers you across restarts.
+**Deliverable:** an agent that remembers the user across restarts.
 
 ---
 
@@ -82,7 +82,7 @@ Short-term: conversation history management. Context window overflow strategies 
 ### Module 10 — MCP: what and why
 The N×M integration problem MCP solves. Host / client / server architecture. JSON-RPC 2.0 fundamentals. The three primitives: tools, resources, prompts. Transports: stdio vs Streamable HTTP. **The 2026-07-28 stateless rewrite**: no handshake, no sessions, `server/discover`, header-based routing, cacheable lists. Protocol version history and how to read older tutorials without being misled. SDK v1 vs v2 differences table.
 
-### Module 11 — Your first MCP server
+### Module 11 — First MCP server
 `MCPServer` (the class formerly known as `FastMCP`). `@mcp.tool()` and type-hint-driven schemas. Docstrings as tool descriptions. Running over stdio. Testing in-memory with the new first-class `Client` — no subprocess, no transport, fast tests. The MCP Inspector. Structured tool output. Error handling: `ToolError` vs `MCPError` vs everything else, and which ones the model actually sees.
 **Deliverable:** a working, tested MCP server.
 
@@ -91,7 +91,7 @@ Resources and resource templates. RFC 6570 URI templates (real ones now, with `{
 **Deliverable:** a server exposing a real data source with all three primitives.
 
 ### Module 13 — Inside the handler
-The `Context` object. Dependency injection. The new `Resolve(fn)` pattern — filling parameters from your own code instead of from the model. Elicitation: asking the user mid-call. **Multi-Round-Trip Requests (MRTR)** — the replacement for server-initiated requests, and the single most likely thing to break in ported code. Progress reporting. Lifespan (now runs once, not per session). Subscriptions via `subscriptions/listen`. Deprecated: roots, sampling, protocol logging.
+The `Context` object. Dependency injection. The new `Resolve(fn)` pattern — filling parameters from application code instead of from the model. Elicitation: asking the user mid-call. **Multi-Round-Trip Requests (MRTR)** — the replacement for server-initiated requests, and the single most likely thing to break in ported code. Progress reporting. Lifespan (now runs once, not per session). Subscriptions via `subscriptions/listen`. Deprecated: roots, sampling, protocol logging.
 **Deliverable:** a tool that asks the user for confirmation before doing something destructive, working on both protocol eras.
 
 ### Module 14 — MCP clients in Python
@@ -99,11 +99,11 @@ The `Client` class. Four transport forms: in-memory, stdio subprocess, Streamabl
 **Deliverable:** a client that aggregates tools from three servers.
 
 ### Module 15 — Wiring MCP into agents and hosts
-Connecting your server to Claude Desktop, Claude Code, and other hosts. Config files and their gotchas. **Building your own host**: feeding MCP tools into the Claude API tool loop from Module 6 — this is where Parts 2 and 3 join up. Tool namespacing and collision handling. Filtering which tools an agent may see. Dynamic tool discovery.
-**Deliverable:** your Module 7 agent, now powered entirely by MCP servers.
+Connecting a server to Claude Desktop, Claude Code, and other hosts. Config files and their gotchas. **Building a custom host**: feeding MCP tools into the Claude API tool loop from Module 6 — this is where Parts 2 and 3 join up. Tool namespacing and collision handling. Filtering which tools an agent may see. Dynamic tool discovery.
+**Deliverable:** the Module 7 agent, now powered entirely by MCP servers.
 
 ### Module 16 — Remote MCP servers
-Streamable HTTP in depth. Running with `run(transport="streamable-http")`. Mounting into an existing ASGI/FastAPI app. Serving both protocol eras from one endpoint. Deploying behind a load balancer (now genuinely possible — this is what stateless bought us). Host allowlists. `RequestStateSecurity` keys for multi-replica MRTR. Notifications across replicas with a shared `SubscriptionBus`. Health checks, timeouts, graceful shutdown.
+Streamable HTTP in depth. Running with `run(transport="streamable-http")`. Mounting into an existing ASGI/FastAPI app. Serving both protocol eras from one endpoint. Deploying behind a load balancer (now genuinely possible — this is what the stateless rewrite enables). Host allowlists. `RequestStateSecurity` keys for multi-replica MRTR. Notifications across replicas with a shared `SubscriptionBus`. Health checks, timeouts, graceful shutdown.
 **Deliverable:** a publicly deployed MCP server.
 
 ### Module 17 — MCP security and authorization
@@ -127,7 +127,7 @@ Honest survey: LangGraph, PydanticAI, Claude Agent SDK, OpenAI Agents SDK, CrewA
 
 ### Module 21 — PydanticAI
 Typed agents. Dependency injection. Structured results. `TestModel` and `FunctionModel` for testing without spending money. Streaming. MCP integration. Multi-provider support.
-**Deliverable:** your agent rebuilt, fully typed and unit tested.
+**Deliverable:** the agent rebuilt, fully typed and unit tested.
 
 ### Module 22 — LangGraph
 State graphs and why "the workflow is the product". Nodes, edges, conditional routing. Checkpointing and durable execution. Human-in-the-loop interrupts. Time travel and replay. Subgraphs. Streaming. Persistence backends. LangSmith tracing.
@@ -152,7 +152,7 @@ What embeddings are, geometrically. Choosing a model. Chunking strategies and wh
 The naive RAG pipeline and its failure modes. Hybrid search (BM25 + vector). Reranking. Query rewriting and expansion. Contextual retrieval. Citations and grounding. Evaluating retrieval separately from generation. **Agentic RAG** — letting the agent decide what and when to retrieve.
 
 ### Module 27 — Knowledge as an MCP server
-Wrapping your RAG pipeline as MCP tools and resources. Designing retrieval tools a model can use well. Caching. Access control per user.
+Wrapping the RAG pipeline as MCP tools and resources. Designing retrieval tools a model can use well. Caching. Access control per user.
 **Deliverable:** a document-Q&A MCP server any host can plug into.
 
 ---
@@ -165,14 +165,14 @@ Integrating third-party APIs (auth patterns, pagination, rate limits). Webhooks 
 
 ### Module 29 — Building user interfaces
 Choosing: console vs web vs API vs chat-app-embedded. Streamlit for internal tools. Chainlit for chat UIs. FastAPI + server-sent events for custom frontends. Streaming to a browser. Rendering tool calls so users can see what the agent did. Approval UIs. Auth and multi-user.
-**Deliverable:** a web UI over your agent, with streaming and approvals.
+**Deliverable:** a web UI over the agent, with streaming and approvals.
 
 ---
 
 ## PART 7 — PRODUCTION
 
 ### Module 30 — Evaluating agents
-Why "it looked good in testing" fails. Building eval datasets. Deterministic assertions vs LLM-as-judge. Trajectory evaluation vs final-answer evaluation. Regression suites. CI integration. Measuring tool-selection accuracy. Red-teaming your own agent.
+Why "it looked good in testing" fails. Building eval datasets. Deterministic assertions vs LLM-as-judge. Trajectory evaluation vs final-answer evaluation. Regression suites. CI integration. Measuring tool-selection accuracy. Red-teaming the agent.
 
 ### Module 31 — Observability and cost
 Structured logging for agents. OpenTelemetry and distributed traces across agent → MCP server → API. LangFuse / LangSmith / Phoenix. Tracking cost per request, per user, per feature. Latency budgets. Debugging non-deterministic failures. Alerting.
@@ -184,4 +184,4 @@ Prompt injection — direct and indirect — with working attacks and defenses. 
 Packaging with Docker. Environment and secret management. Deploying agents: containers, serverless, long-running workers. Scaling stateless MCP servers. Health checks and graceful degradation. CI/CD. Versioning agents and prompts. Rollback strategy.
 
 ### Module 34 — Capstone
-You design and build a complete system: custom MCP servers, an agent that orchestrates them, a UI, auth, evals, observability, and a deployment. I review it in detail and we iterate until it's genuinely production-grade.
+A complete system, designed and built end to end: custom MCP servers, an agent that orchestrates them, a UI, auth, evals, observability, and a deployment. Reviewed in detail and iterated on until it's genuinely production-grade.
