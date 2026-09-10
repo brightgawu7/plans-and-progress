@@ -199,23 +199,4 @@ Pick one: (a) multimodal financial-report analyst using ColPali, (b) GraphRAG re
 
 ### Module 34 — Staying expert
 How to read a RAG paper in 15 minutes. Key benchmarks (BEIR, MTEB, ViDoRe, CRAG, RAGBench) and how to not be fooled by them. Evaluating a new technique against your own baseline before adopting it. Where the field is heading: agentic retrieval, memory-centric architectures, retrieval as reasoning, context governance. Reading list, communities, and RAG system-design interview prep.
-
----
-
-## Appendix A — Glossary
-Maintained across the course: every term (ANN, HNSW, MaxSim, NDCG, RRF, MMR, cross-encoder, late interaction, hard negative, etc.) defined the first time it appears, collected here.
-
-## Appendix B — The repo
-By the end you'll have:
-```
-rag-course/
-├── m00_setup/ ... m34_mastery/
-├── shared/            # reusable library you build across the course
-├── data/              # corpora used throughout
-├── evals/             # golden datasets and eval harness
-├── docker/
-└── docs/              # your own notes + architecture decisions
-```
-
-## Appendix C — Things most tutorials skip, that this course covers
-Ingestion of genuinely messy documents · incremental re-indexing · embedding model migration · permission filtering · prompt injection via documents · eval before optimisation · cost modelling · when RAG is the wrong tool · graceful degradation · the fact that most "advanced RAG" techniques don't help your specific corpus and you need evidence to know which do.
+· incremental re-indexing · embedding model migration · permission filtering · prompt injection via documents · eval before optimisation · cost modelling · when RAG is the wrong tool · graceful degradation · the fact that most "advanced RAG" techniques don't help your specific corpus and you need evidence to know which do.
