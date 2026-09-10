@@ -185,15 +185,3 @@ Packaging with Docker. Environment and secret management. Deploying agents: cont
 
 ### Module 34 — Capstone
 You design and build a complete system: custom MCP servers, an agent that orchestrates them, a UI, auth, evals, observability, and a deployment. I review it in detail and we iterate until it's genuinely production-grade.
-
----
-
-## Ground rules
-
-- **Type the code.** Don't copy-paste. You learn the API surface through your fingers.
-- **Break things deliberately.** Each module has "now break it" exercises. Debugging is the skill.
-- **Tell me when you're stuck** — with the actual error text. Don't skip ahead.
-- **Tell me when a module is done** and I'll deliver the next one.
-- If something in a module is unclear, ask before moving on. Later modules assume earlier ones.
-
-Total realistic time: 3–6 months at a few hours a week. Faster if you're full-time.
